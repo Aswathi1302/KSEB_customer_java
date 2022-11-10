@@ -1,7 +1,20 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.Scanner;
 
 public class Customer {
     public static void main(String[] args) {
+        int code,phone;
+        String name,address,email;
+        try{
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/admindb","root","");
+        }
+        catch (Exception e){
+            System.out.println((e));
+        }
         int choice;
         while(true)
         {
@@ -24,12 +37,36 @@ public class Customer {
             {
                 case 1:
                     System.out.println("Add customer details...");
+                    System.out.println("Enter the customer code");
+                    code=sc.nextInt();
+                    System.out.println("Enter the  name:--");
+                    name=sc.next();
+                    System.out.println("Enter the Address:--");
+                    address=sc.next();
+                    System.out.println("Enter the phone:--");
+                    phone=sc.nextInt();
+                    System.out.println("Enter the email:--");
+                    email=sc.next();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/admindb","root","");
+                        String sql="INSERT INTO `customer`(`code`, `name`, `address`, `phone`, `email`) VALUES (?,?,?,?,?)";
+                        PreparedStatement stmt=con.prepareStatement((sql));
+                        stmt.setInt(1,code);
+                        stmt.setString(2,name);
+                        stmt.setString(3,address);
+                        stmt.setInt(4,phone);
+                        stmt.setString(5,email);
+                        stmt.executeUpdate();
+                        System.out.println("value inserted successfully.........!");
+                    }
+                    catch (Exception e){
+                        System.out.println((e));
+                    }
                     break;
                 case 2:
                     System.out.println("Search customer");
-                    break;
-                case 3:
-                    System.out.println("Delete customer");
+
                     break;
                 case 4:
                     System.out.println("Update customer");
