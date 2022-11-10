@@ -66,7 +66,25 @@ public class Customer {
                     break;
                 case 2:
                     System.out.println("Search customer");
-
+                    System.out.println("1.Search by code");
+                    System.out.println("2.Search by Name");
+                    System.out.println("1.Search by phone");
+                    break;
+                case 3:
+                    System.out.println("Delete customer");
+                    System.out.println("enter the code ");
+                    code=sc.nextInt();
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/admindb","root","");
+                        String sql="DELETE FROM `customer` WHERE `code`="+String.valueOf(code);
+                        Statement stmt=con.createStatement();
+                        stmt.executeUpdate(sql);
+                        System.out.println("deleted successfully.....");
+                    }
+                    catch (Exception e){
+                        System.out.println((e));
+                    }
                     break;
                 case 4:
                     System.out.println("Update customer");
