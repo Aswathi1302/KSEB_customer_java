@@ -261,6 +261,38 @@ public class Customer {
                     }
                 case 7:
                     System.out.println("View all bills");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/admindb","root","");
+                        String sql = "SELECT c.name,c.address, b.`month`, b.`year`, b.`paidstatus`, b.`billdate`, b.`totalunit`, b.`bill` FROM `bill` b JOIN customer c ON b.userid=c.id";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while(rs.next())
+                        {
+                            name = rs.getString("c.name");
+                            address = rs.getString("c.address");
+                            int month1 = rs.getInt("b.month");
+                            int year1 = rs.getInt("b.year");
+                            String sta = rs.getString("b.paidstatus");
+                            String date1 = rs.getString("b.billdate");
+                            int total = rs.getInt("b.totalunit");
+                            int bill = rs.getInt("b.bill");
+                            System.out.println("name ="+name);
+                            System.out.println("address ="+address);
+                            System.out.println("month ="+month1);
+                            System.out.println("year = "+year1);
+                            System.out.println("status="+sta);
+                            System.out.println("bill date="+date1);
+                            System.out.println("total unit ="+total);
+                            System.out.println("total bill = "+bill);
+                            System.out.println("\n");
+
+
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println((e));
+                    }
 
                     break;
                 case 8:
