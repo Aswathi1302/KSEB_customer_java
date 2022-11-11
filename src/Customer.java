@@ -297,6 +297,27 @@ public class Customer {
                     break;
                 case 8:
                     System.out.println("View top two bills");
+                    try{
+                        Class.forName("com.mysql.jdbc.Driver");
+                        Connection con= DriverManager.getConnection("jdbc:mysql://localhost:3306/admindb","root","");
+                        String sql = "SELECT c.name,c.address,b.`bill`, b.`totalunit` FROM `bill` b JOIN customer c ON b.userid=c.id ORDER BY b.`bill`DESC LIMIT 2";
+                        Statement stmt = con.createStatement();
+                        ResultSet rs = stmt.executeQuery(sql);
+                        while(rs.next()){
+                            name = rs.getString("c.name");
+                            address = rs.getString("c.address");
+                            int bill = rs.getInt("bill");
+                            int total = rs.getInt("totalunit");
+                            System.out.println("name ="+name);
+                            System.out.println("address ="+address);
+                            System.out.println("total bill = "+bill);
+                            System.out.println("total unit ="+total+'\n');
+                        }
+                    }
+                    catch (Exception e){
+                        System.out.println((e));
+                    }
+
                 case 9:
                     System.exit(0);
 
